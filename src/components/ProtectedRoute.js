@@ -1,18 +1,15 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-export default  function ProtectedRoute(props) {
-      const {
-          component: Component,
-          ...rest} = props
+export default  function ProtectedRoute({ component: Component, ...rest}) {
 
     return (
-        <Route {...rest} render={() => {
-            if(localStorage.getItem('token')) {
-                return <Component {...props} />
-            }else {
-                return <Redirect to='/signin' />
-            }
-        }} />
+        <Route {...rest} render={props => 
+            localStorage.getItem('token') ? (
+                <Component {...props} />
+            ) : (
+                 <Redirect to='/signin' />
+            )
+        } />
     )
 }
